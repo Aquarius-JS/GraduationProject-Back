@@ -1,0 +1,22 @@
+{
+  "name": "graduationproject-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "3000": "node src/server.js",
+    "3031": "node src/ossServer.js",
+    "start": "npm run 3031"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@textbus/xnote": "^0.3.2",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "katex": "^0.16.19",
+    "multer": "^1.4.5-lts.1"
+  }
+}
