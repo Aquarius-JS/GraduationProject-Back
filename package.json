@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "3000": "node src/server.js",
-    "3031": "node src/ossServer.js",
+    "3000": "nodemon src/server.js",
+    "3031": "nodemon src/ossServer.js",
     "start": "npm run 3031"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "katex": "^0.16.19",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.12.0"
   }
 }
