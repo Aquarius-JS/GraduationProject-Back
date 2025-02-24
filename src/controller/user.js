@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { privateKey } = require('../config/appConfig');
-const { cookieMaxAge } = require('../config/userInfo');
+const { cookieMaxAge, tokenMaxAge } = require('../config/userInfo');
 const { getUserInfoByStuNumber } = require('../model/userInfo');
 
 /**
@@ -13,7 +13,7 @@ async function login(req, res) {
   const info = await getUserInfoByStuNumber(stuNumber);
   const stuInfo = info[0];
   if (stuInfo && stuInfo.password === password) {
-    const token = jwt.sign({ stuNumber }, privateKey); // TODO: token有效期
+    const token = jwt.sign({ stuNumber }, privateKey, { expiresIn: tokenMaxAge });
     res.cookie('token', token, { httpOnly: false, maxAge: cookieMaxAge });
     res.json({ isOk: true });
   } else {

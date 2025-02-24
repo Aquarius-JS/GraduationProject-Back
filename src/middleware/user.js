@@ -10,6 +10,7 @@ const { privateKey } = require('../config/appConfig');
 async function isLoginMiddleware(req, res, next) {
   if (req.path === '/login') {
     next();
+    return;
   }
   const token = req.cookies?.token;
   if (!token) {
@@ -21,6 +22,7 @@ async function isLoginMiddleware(req, res, next) {
       } else {
         req.stuNumberByToken = decoded.stuNumber;
         next();
+        return;
       }
     });
   }
