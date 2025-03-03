@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { privateKey } = require('../config/appConfig');
 const { cookieMaxAge, tokenMaxAge } = require('../config/userInfo');
-const { getUserInfoByStuNumber } = require('../model/userInfo');
+const { getUserInfoByStuNumber, getVehicleInfoByStuNumber } = require('../model/userInfo');
 
 /**
  * 根据学号密码进行登录
@@ -33,5 +33,16 @@ async function getUserInfo(req, res) {
   res.json(userInfo);
 }
 
+async function getStudentAndVehicleInfo(req, res) {
+  const stuNumberByToken = req.stuNumberByToken;
+  console.log(stuNumberByToken, 'stuNumberByToken');
+  const [userInfo, vehicleInfo] = await Promise.all([
+    getUserInfoByStuNumber(stuNumberByToken),
+    getVehicleInfoByStuNumber(stuNumberByToken),
+  ]);
+  res.json({ userInfo, vehicleInfo });
+}
+
 exports.login = login;
 exports.getUserInfo = getUserInfo;
+exports.getStudentAndVehicleInfo = getStudentAndVehicleInfo;
