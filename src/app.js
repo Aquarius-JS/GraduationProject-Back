@@ -2,7 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const myCors = require('./middleware/cors');
 const { isLoginMiddleware } = require('./middleware/user');
-const { login, getUserInfo, getStudentAndVehicleInfo } = require('./controller/user');
+const { login, getUserInfo, getStudentAndVehicleInfo, uploadStuAvatar } = require('./controller/user');
 const { port } = require('./config/appConfig');
 const app = express();
 
@@ -13,6 +13,7 @@ app.use(isLoginMiddleware); // for checking login status
 
 app.post('/login', login);
 app.post('/getStudentAndVehicleInfo', getStudentAndVehicleInfo);
+app.post('/uploadStuAvatar', uploadStuAvatar);
 app.get('/getUserInfo', getUserInfo);
 
 app.listen(port, () => {

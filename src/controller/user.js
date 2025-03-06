@@ -43,6 +43,13 @@ async function getStudentAndVehicleInfo(req, res) {
   res.json({ userInfo, vehicleInfo });
 }
 
+async function uploadStuAvatar(req, res) {
+  // TODO: 上传头像
+  console.log(req.file, 'req.file');
+  res.json({ url: req.file.path });
+}
+
 exports.login = login;
 exports.getUserInfo = getUserInfo;
 exports.getStudentAndVehicleInfo = getStudentAndVehicleInfo;
+exports.uploadStuAvatar = uploadStuAvatar;
