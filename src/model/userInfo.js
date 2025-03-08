@@ -36,5 +36,12 @@ async function getVehicleInfoByStuNumber(stuNumber) {
   return vehicleInfoList;
 }
 
+async function updateStuAvatar(stuNumber, avatarUrl) {
+  const connection = await createConnection();
+  await connection.query('UPDATE `user_info` SET `user_img` = ? WHERE `stu_number` = ?', [avatarUrl, stuNumber]);
+  connection.end();
+}
+
 exports.getUserInfoByStuNumber = getUserInfoByStuNumber;
 exports.getVehicleInfoByStuNumber = getVehicleInfoByStuNumber;
+exports.updateStuAvatar = updateStuAvatar;

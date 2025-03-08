@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { privateKey } = require('../config/appConfig');
 const { cookieMaxAge, tokenMaxAge } = require('../config/userInfo');
-const { getUserInfoByStuNumber, getVehicleInfoByStuNumber } = require('../model/userInfo');
+const { getUserInfoByStuNumber, getVehicleInfoByStuNumber, updateStuAvatar } = require('../model/userInfo');
+const fileStreamToResUrl = require('../service/base64url');
 
 /**
  * 根据学号密码进行登录
@@ -44,9 +45,9 @@ async function getStudentAndVehicleInfo(req, res) {
 }
 
 async function uploadStuAvatar(req, res) {
-  // TODO: 上传头像
-  console.log(req.file, 'req.file');
-  res.json({ url: req.file.path });
+  const resUrl = await fileStreamToResUrl(req);
+  await updateStuAvatar(req.stuNumberByToken, resUrl);
+  res.json({ resUrl });
 }
 
 exports.login = login;
