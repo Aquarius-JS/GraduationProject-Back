@@ -6,6 +6,8 @@ const {
   getVehicleInfoByStuNumber,
   updateStuAvatar,
   updateStuInfo: updateStuInfoModel,
+  getPasswordByStuNumber,
+  updatePassword,
 } = require('../model/userInfo');
 const fileStreamToResUrl = require('../service/base64url');
 
@@ -75,8 +77,26 @@ async function updateStuInfo(req, res) {
   res.json({ isOk: true });
 }
 
+/**
+ * 学生修改密码
+ * @param {*} req
+ * @param {*} res
+ */
+async function editPassword(req, res) {
+  console.log(req.body, 'req.body');
+  const { oldHashPassword, newHashPassword } = req.body;
+  const password = await getPasswordByStuNumber(req.stuNumberByToken);
+  if (password !== oldHashPassword) {
+    res.send({ isOk: false, message: '原密码错误' });
+  } else {
+    await updatePassword(req.stuNumberByToken, newHashPassword);
+    res.send({ isOk: true, message: '密码修改成功' });
+  }
+}
+
 exports.login = login;
 exports.getUserInfo = getUserInfo;
 exports.getStudentAndVehicleInfo = getStudentAndVehicleInfo;
 exports.uploadStuAvatar = uploadStuAvatar;
 exports.updateStuInfo = updateStuInfo;
+exports.editPassword = editPassword;

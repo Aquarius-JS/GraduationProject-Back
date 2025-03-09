@@ -51,7 +51,22 @@ async function updateStuInfo(stuNumber, newInfo) {
   connection.end();
 }
 
+async function getPasswordByStuNumber(stuNumber) {
+  const connection = await createConnection();
+  const [results] = await connection.query('SELECT password FROM `user_info` WHERE `stu_number` = ?', [stuNumber]);
+  connection.end();
+  return results[0].password;
+}
+
+async function updatePassword(stuNumber, password) {
+  const connection = await createConnection();
+  await connection.query('UPDATE `user_info` SET `password` = ? WHERE `stu_number` = ?', [password, stuNumber]);
+  connection.end();
+}
+
 exports.getUserInfoByStuNumber = getUserInfoByStuNumber;
 exports.getVehicleInfoByStuNumber = getVehicleInfoByStuNumber;
 exports.updateStuAvatar = updateStuAvatar;
 exports.updateStuInfo = updateStuInfo;
+exports.getPasswordByStuNumber = getPasswordByStuNumber;
+exports.updatePassword = updatePassword;
