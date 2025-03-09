@@ -1,7 +1,12 @@
 const jwt = require('jsonwebtoken');
 const { privateKey } = require('../config/appConfig');
 const { cookieMaxAge, tokenMaxAge } = require('../config/userInfo');
-const { getUserInfoByStuNumber, getVehicleInfoByStuNumber, updateStuAvatar } = require('../model/userInfo');
+const {
+  getUserInfoByStuNumber,
+  getVehicleInfoByStuNumber,
+  updateStuAvatar,
+  updateStuInfo: updateStuInfoModel,
+} = require('../model/userInfo');
 const fileStreamToResUrl = require('../service/base64url');
 
 /**
@@ -34,6 +39,11 @@ async function getUserInfo(req, res) {
   res.json(userInfo);
 }
 
+/**
+ * 获取学生信息和其车辆登记信息
+ * @param {*} req
+ * @param {*} res
+ */
 async function getStudentAndVehicleInfo(req, res) {
   const stuNumberByToken = req.stuNumberByToken;
   console.log(stuNumberByToken, 'stuNumberByToken');
@@ -44,13 +54,29 @@ async function getStudentAndVehicleInfo(req, res) {
   res.json({ userInfo, vehicleInfo });
 }
 
+/**
+ * 上传学生头像
+ * @param {*} req
+ * @param {*} res
+ */
 async function uploadStuAvatar(req, res) {
   const resUrl = await fileStreamToResUrl(req);
   await updateStuAvatar(req.stuNumberByToken, resUrl);
   res.json({ resUrl });
 }
 
+/**
+ * 更新用户信息
+ * @param {*} req
+ * @param {*} res
+ */
+async function updateStuInfo(req, res) {
+  await updateStuInfoModel(req.stuNumberByToken, req.body);
+  res.json({ isOk: true });
+}
+
 exports.login = login;
 exports.getUserInfo = getUserInfo;
 exports.getStudentAndVehicleInfo = getStudentAndVehicleInfo;
 exports.uploadStuAvatar = uploadStuAvatar;
+exports.updateStuInfo = updateStuInfo;

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const myCors = require('./middleware/cors');
 const { isLoginMiddleware } = require('./middleware/user');
-const { login, getUserInfo, getStudentAndVehicleInfo, uploadStuAvatar } = require('./controller/user');
+const { login, getUserInfo, getStudentAndVehicleInfo, uploadStuAvatar, updateStuInfo } = require('./controller/user');
 const { port } = require('./config/appConfig');
 const app = express();
 const upload = multer(); // for parsing multipart/form-data
@@ -20,6 +20,7 @@ app.use(bodyParser.raw({ type: 'image/*', limit: 1024 * 1024 * 5 }));
 app.post('/login', login);
 app.post('/getStudentAndVehicleInfo', getStudentAndVehicleInfo);
 app.post('/uploadStuAvatar', upload.array(), uploadStuAvatar);
+app.post('/updateStuInfo', updateStuInfo);
 app.get('/getUserInfo', getUserInfo);
 
 app.listen(port, () => {
