@@ -48,7 +48,6 @@ async function getUserInfo(req, res) {
  */
 async function getStudentAndVehicleInfo(req, res) {
   const stuNumberByToken = req.stuNumberByToken;
-  console.log(stuNumberByToken, 'stuNumberByToken');
   const [userInfo, vehicleInfo] = await Promise.all([
     getUserInfoByStuNumber(stuNumberByToken),
     getVehicleInfoByStuNumber(stuNumberByToken),
@@ -83,7 +82,6 @@ async function updateStuInfo(req, res) {
  * @param {*} res
  */
 async function editPassword(req, res) {
-  console.log(req.body, 'req.body');
   const { oldHashPassword, newHashPassword } = req.body;
   const password = await getPasswordByStuNumber(req.stuNumberByToken);
   if (password !== oldHashPassword) {
