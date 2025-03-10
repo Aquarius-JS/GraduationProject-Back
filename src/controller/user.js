@@ -19,8 +19,7 @@ const fileStreamToResUrl = require('../service/base64url');
 async function login(req, res) {
   const { stuNumber, password } = req.body;
   const info = await getUserInfoByStuNumber(stuNumber);
-  const stuInfo = info[0];
-  if (stuInfo && stuInfo.password === password) {
+  if (info && info.password === password) {
     const token = jwt.sign({ stuNumber }, privateKey, { expiresIn: tokenMaxAge });
     res.cookie('token', token, { httpOnly: false, maxAge: cookieMaxAge });
     res.json({ isOk: true });
