@@ -8,8 +8,10 @@ const {
   updateStuInfo: updateStuInfoModel,
   getPasswordByStuNumber,
   updatePassword,
+  creatVehicleRegistrationInfo,
 } = require('../model/userInfo');
-const fileStreamToResUrl = require('../service/base64url');
+const fileStreamToResUrl = require('../service/share/base64url');
+const curUnixDate = require('../service/share/curUnixDate');
 
 /**
  * 根据学号密码进行登录
@@ -91,9 +93,42 @@ async function editPassword(req, res) {
   }
 }
 
+/**
+ * 车辆登记信息提交接口
+ * @param {*} req
+ * @param {*} res
+ */
+async function vehicleRegistration(req, res) {
+  const id = curUnixDate(); // TODO: 生成唯一id
+  const stu_number = req.stuNumberByToken;
+  const license_number = req.body.license_number;
+  const vehicle_type = req.body.vehicle_type;
+  const vehicle_status = 1; //登记状态
+  const stu_card_img = req.body.stu_card_img;
+  const vehicle_img = req.body.vehicle_img;
+  const license_img = req.body.license_img;
+  const filing_date = curUnixDate();
+  await creatVehicleRegistrationInfo(
+    id,
+    stu_number,
+    license_number,
+    vehicle_type,
+    vehicle_status,
+    stu_card_img,
+    vehicle_img,
+    license_img,
+    filing_date
+  );
+  res.send({
+    isOk: true,
+    message: '提交成功',
+  });
+}
+
 exports.login = login;
 exports.getUserInfo = getUserInfo;
 exports.getStudentAndVehicleInfo = getStudentAndVehicleInfo;
 exports.uploadStuAvatar = uploadStuAvatar;
 exports.updateStuInfo = updateStuInfo;
 exports.editPassword = editPassword;
+exports.vehicleRegistration = vehicleRegistration;

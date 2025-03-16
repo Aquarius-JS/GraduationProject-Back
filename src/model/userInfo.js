@@ -64,9 +64,16 @@ async function updatePassword(stuNumber, password) {
   connection.end();
 }
 
+async function creatVehicleRegistrationInfo(...args) {
+  const connection = await createConnection();
+  await connection.query('INSERT INTO `vehicle_registration_info` VALUES(?,?,?,?,?,?,?,?,?)', [...args]);
+  connection.end();
+}
+
 exports.getUserInfoByStuNumber = getUserInfoByStuNumber;
 exports.getVehicleInfoByStuNumber = getVehicleInfoByStuNumber;
 exports.updateStuAvatar = updateStuAvatar;
 exports.updateStuInfo = updateStuInfo;
 exports.getPasswordByStuNumber = getPasswordByStuNumber;
 exports.updatePassword = updatePassword;
+exports.creatVehicleRegistrationInfo = creatVehicleRegistrationInfo;

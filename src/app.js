@@ -11,13 +11,14 @@ const {
   uploadStuAvatar,
   updateStuInfo,
   editPassword,
+  vehicleRegistration,
 } = require('./controller/user');
-const { port } = require('./config/appConfig');
+const { port, bodyMaxValue } = require('./config/appConfig');
 const app = express();
 const upload = multer(); // for parsing multipart/form-data
 
 app.use(myCors); // for CORS
-app.use(express.json()); // for parsing application/json
+app.use(express.json({ limit: bodyMaxValue })); // for parsing application/json
 app.use(cookieParser()); // for parsing cookies
 app.use(isLoginMiddleware); // for checking login status
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -30,6 +31,8 @@ app.post('/uploadStuAvatar', upload.array(), uploadStuAvatar);
 app.post('/updateStuInfo', updateStuInfo);
 app.post('/editPassword', editPassword);
 app.get('/getUserInfo', getUserInfo);
+
+app.post('/vehicleRegistration', vehicleRegistration);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
