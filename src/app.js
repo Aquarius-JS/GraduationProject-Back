@@ -6,11 +6,12 @@ const myCors = require('./middleware/cors');
 const { isLoginMiddleware } = require('./middleware/user');
 const {
   login,
-  getUserInfo,
+  getStuInfo,
   getStudentAndVehicleInfo,
   uploadStuAvatar,
   updateStuInfo,
   editPassword,
+  getVehicleInfoByStu,
   vehicleRegistration,
 } = require('./controller/user');
 const { port, bodyMaxValue } = require('./config/appConfig');
@@ -30,8 +31,9 @@ app.post('/getStudentAndVehicleInfo', getStudentAndVehicleInfo);
 app.post('/uploadStuAvatar', upload.array(), uploadStuAvatar);
 app.post('/updateStuInfo', updateStuInfo);
 app.post('/editPassword', editPassword);
-app.get('/getUserInfo', getUserInfo);
+app.post('/getStuInfo', getStuInfo);
 
+app.post('/getVehicleInfoByStu', getVehicleInfoByStu);
 app.post('/vehicleRegistration', vehicleRegistration);
 
 app.listen(port, () => {

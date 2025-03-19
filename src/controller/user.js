@@ -35,10 +35,9 @@ async function login(req, res) {
  * @param {Object} req
  * @returns
  */
-async function getUserInfo(req, res) {
-  const token = req.cookies.token;
-  const { stuNumber } = jwt.verify(token, privateKey);
-  const userInfo = await getUserInfoByStuNumber(stuNumber);
+async function getStuInfo(req, res) {
+  const stuNumberByToken = req.stuNumberByToken;
+  const userInfo = await getUserInfoByStuNumber(stuNumberByToken);
   res.json(userInfo);
 }
 
@@ -53,6 +52,7 @@ async function getStudentAndVehicleInfo(req, res) {
     getUserInfoByStuNumber(stuNumberByToken),
     getVehicleInfoByStuNumber(stuNumberByToken),
   ]);
+  vehicleInfo.sort((a, b) => b.filing_date - a.filing_date);
   res.json({ userInfo, vehicleInfo });
 }
 
@@ -94,6 +94,18 @@ async function editPassword(req, res) {
 }
 
 /**
+ * 根据token信息中的stu_number获取登记车辆信息
+ * @param {*} req
+ * @param {*} res
+ */
+async function getVehicleInfoByStu(req, res) {
+  const stuNumberByToken = req.stuNumberByToken;
+  const vehicleInfo = await getVehicleInfoByStuNumber(stuNumberByToken);
+  vehicleInfo.sort((a, b) => b.filing_date - a.filing_date);
+  res.json(vehicleInfo);
+}
+
+/**
  * 车辆登记信息提交接口
  * @param {*} req
  * @param {*} res
@@ -126,9 +138,10 @@ async function vehicleRegistration(req, res) {
 }
 
 exports.login = login;
-exports.getUserInfo = getUserInfo;
+exports.getStuInfo = getStuInfo;
 exports.getStudentAndVehicleInfo = getStudentAndVehicleInfo;
 exports.uploadStuAvatar = uploadStuAvatar;
 exports.updateStuInfo = updateStuInfo;
 exports.editPassword = editPassword;
+exports.getVehicleInfoByStu = getVehicleInfoByStu;
 exports.vehicleRegistration = vehicleRegistration;
