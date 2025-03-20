@@ -14,6 +14,7 @@ const {
   getVehicleInfoByStu,
   vehicleRegistration,
 } = require('./controller/user');
+const { getRegisterInfo } = require('./controller/admin');
 const { port, bodyMaxValue } = require('./config/appConfig');
 const app = express();
 const upload = multer(); // for parsing multipart/form-data
@@ -35,6 +36,8 @@ app.post('/getStuInfo', getStuInfo);
 
 app.post('/getVehicleInfoByStu', getVehicleInfoByStu);
 app.post('/vehicleRegistration', vehicleRegistration);
+
+app.post('/admin/getRegisterInfo', getRegisterInfo);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

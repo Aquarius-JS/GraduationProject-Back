@@ -70,6 +70,13 @@ async function creatVehicleRegistrationInfo(...args) {
   connection.end();
 }
 
+async function getVehicleRegistrationInfo() {
+  const connection = await createConnection();
+  const [vehicleInfoList] = await connection.query('SELECT * FROM `vehicle_registration_info`');
+  connection.end();
+  return vehicleInfoList;
+}
+
 exports.getUserInfoByStuNumber = getUserInfoByStuNumber;
 exports.getVehicleInfoByStuNumber = getVehicleInfoByStuNumber;
 exports.updateStuAvatar = updateStuAvatar;
@@ -77,3 +84,4 @@ exports.updateStuInfo = updateStuInfo;
 exports.getPasswordByStuNumber = getPasswordByStuNumber;
 exports.updatePassword = updatePassword;
 exports.creatVehicleRegistrationInfo = creatVehicleRegistrationInfo;
+exports.getVehicleRegistrationInfo = getVehicleRegistrationInfo;
