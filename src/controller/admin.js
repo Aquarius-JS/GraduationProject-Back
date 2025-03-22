@@ -13,6 +13,11 @@ async function getRegisterInfo(req, res) {
   res.json(registerInfo);
 }
 
+/**
+ * 车辆登记申请审批通过
+ * @param {*} req
+ * @param {*} res
+ */
 async function approveRegister(req, res) {
   const { registerId } = req.body;
   const registerInfo = await getVehicleRegistrationInfoById(registerId);
@@ -24,5 +29,22 @@ async function approveRegister(req, res) {
   }
 }
 
+/**
+ * 车辆登记申请审批拒绝
+ * @param {*} req
+ * @param {*} res
+ */
+async function rejectRegister(req, res) {
+  const { registerId } = req.body;
+  const registerInfo = await getVehicleRegistrationInfoById(registerId);
+  if (registerInfo?.vehicle_status === 1) {
+    await updateVehicleRegistrationInfoById(registerId, 5);
+    res.json({ isOk: true, message: '操作成功', vehicle_status: 5 });
+  } else {
+    res.json({ isOk: false, message: '申请信息发生变化，稍后重试' });
+  }
+}
+
 exports.getRegisterInfo = getRegisterInfo;
 exports.approveRegister = approveRegister;
+exports.rejectRegister = rejectRegister;
