@@ -77,6 +77,24 @@ async function getVehicleRegistrationInfo() {
   return vehicleInfoList;
 }
 
+async function getVehicleRegistrationInfoById(id) {
+  const connection = await createConnection();
+  const [vehicleInfoList] = await connection.query('SELECT * FROM `vehicle_registration_info` where id = ?', [id]);
+  connection.end();
+  return vehicleInfoList[0];
+}
+
+/**
+ * 根据申请id和状态status更新申请表
+ * @param {*} id
+ * @param {*} status
+ */
+async function updateVehicleRegistrationInfoById(id, status) {
+  const connection = await createConnection();
+  await connection.query('UPDATE `vehicle_registration_info` SET `vehicle_status` = ? WHERE `id` = ?', [status, id]);
+  connection.end();
+}
+
 exports.getUserInfoByStuNumber = getUserInfoByStuNumber;
 exports.getVehicleInfoByStuNumber = getVehicleInfoByStuNumber;
 exports.updateStuAvatar = updateStuAvatar;
@@ -85,3 +103,5 @@ exports.getPasswordByStuNumber = getPasswordByStuNumber;
 exports.updatePassword = updatePassword;
 exports.creatVehicleRegistrationInfo = creatVehicleRegistrationInfo;
 exports.getVehicleRegistrationInfo = getVehicleRegistrationInfo;
+exports.getVehicleRegistrationInfoById = getVehicleRegistrationInfoById;
+exports.updateVehicleRegistrationInfoById = updateVehicleRegistrationInfoById;
