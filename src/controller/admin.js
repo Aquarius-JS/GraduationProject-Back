@@ -35,11 +35,11 @@ async function approveRegister(req, res) {
  * @param {*} res
  */
 async function rejectRegister(req, res) {
-  const { registerId } = req.body;
+  const { registerId, remark } = req.body;
   const registerInfo = await getVehicleRegistrationInfoById(registerId);
   if (registerInfo?.vehicle_status === 1) {
-    await updateVehicleRegistrationInfoById(registerId, 5);
-    res.json({ isOk: true, message: '操作成功', vehicle_status: 5 });
+    await updateVehicleRegistrationInfoById(registerId, 5, remark);
+    res.json({ isOk: true, message: '操作成功', vehicle_status: 5, remark });
   } else {
     res.json({ isOk: false, message: '申请信息发生变化，稍后重试' });
   }

@@ -89,9 +89,13 @@ async function getVehicleRegistrationInfoById(id) {
  * @param {*} id
  * @param {*} status
  */
-async function updateVehicleRegistrationInfoById(id, status) {
+async function updateVehicleRegistrationInfoById(id, status, remark = '') {
   const connection = await createConnection();
-  await connection.query('UPDATE `vehicle_registration_info` SET `vehicle_status` = ? WHERE `id` = ?', [status, id]);
+  await connection.query('UPDATE `vehicle_registration_info` SET `vehicle_status` = ?, `remark` = ?  WHERE `id` = ?', [
+    status,
+    remark,
+    id,
+  ]);
   connection.end();
 }
 
