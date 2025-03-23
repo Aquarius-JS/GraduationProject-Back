@@ -120,6 +120,7 @@ async function vehicleRegistration(req, res) {
   const vehicle_img = req.body.vehicle_img;
   const license_img = req.body.license_img;
   const filing_date = curUnixDate();
+  const remark = '';
   await creatVehicleRegistrationInfo(
     id,
     stu_number,
@@ -129,7 +130,8 @@ async function vehicleRegistration(req, res) {
     stu_card_img,
     vehicle_img,
     license_img,
-    filing_date
+    filing_date,
+    remark
   );
   res.send({
     isOk: true,

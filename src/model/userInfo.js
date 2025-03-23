@@ -66,7 +66,7 @@ async function updatePassword(stuNumber, password) {
 
 async function creatVehicleRegistrationInfo(...args) {
   const connection = await createConnection();
-  await connection.query('INSERT INTO `vehicle_registration_info` VALUES(?,?,?,?,?,?,?,?,?)', [...args]);
+  await connection.query('INSERT INTO `vehicle_registration_info` VALUES(?,?,?,?,?,?,?,?,?,?)', [...args]);
   connection.end();
 }
 
