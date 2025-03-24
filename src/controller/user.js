@@ -10,6 +10,7 @@ const {
   updatePassword,
   creatVehicleRegistrationInfo,
 } = require('../model/userInfo');
+const { getVehicleRegistrationInfoById, updateVehicleRegistrationInfoById } = require('../model/userInfo');
 const fileStreamToResUrl = require('../service/share/base64url');
 const curUnixDate = require('../service/share/curUnixDate');
 
@@ -139,6 +140,22 @@ async function vehicleRegistration(req, res) {
   });
 }
 
+/**
+ * 学生确认车辆进入校园
+ * @param {*} req
+ * @param {*} res
+ */
+async function confirmEnterSchool(req, res) {
+  const { registerId } = req.body;
+  const registerInfo = await getVehicleRegistrationInfoById(registerId);
+  if (registerInfo?.vehicle_status === 2) {
+    await updateVehicleRegistrationInfoById(registerId, 3);
+    res.json({ isOk: true, message: '操作成功', vehicle_status: 3 });
+  } else {
+    res.json({ isOk: false, message: '申请信息发生变化，稍后重试' });
+  }
+}
+
 exports.login = login;
 exports.getStuInfo = getStuInfo;
 exports.getStudentAndVehicleInfo = getStudentAndVehicleInfo;
@@ -147,3 +164,4 @@ exports.updateStuInfo = updateStuInfo;
 exports.editPassword = editPassword;
 exports.getVehicleInfoByStu = getVehicleInfoByStu;
 exports.vehicleRegistration = vehicleRegistration;
+exports.confirmEnterSchool = confirmEnterSchool;
