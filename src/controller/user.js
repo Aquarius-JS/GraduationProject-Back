@@ -157,6 +157,22 @@ async function confirmEnterSchool(req, res) {
 }
 
 /**
+ * 车辆审批拒绝后选择重新申请状态修改
+ * @param {*} req
+ * @param {*} res
+ */
+async function registerAgain(req, res) {
+  const { registerId } = req.body;
+  const registerInfo = await getVehicleRegistrationInfoById(registerId);
+  if (registerInfo?.vehicle_status === 5) {
+    await updateVehicleRegistrationInfoById(registerId, 0);
+    res.json({ isOk: true, message: '操作成功', vehicle_status: 0 });
+  } else {
+    res.json({ isOk: false, message: '申请信息发生变化，稍后重试' });
+  }
+}
+
+/**
  * 学生取消登记操作
  * @param {*} req
  * @param {*} res
@@ -182,4 +198,5 @@ exports.editPassword = editPassword;
 exports.getVehicleInfoByStu = getVehicleInfoByStu;
 exports.vehicleRegistration = vehicleRegistration;
 exports.confirmEnterSchool = confirmEnterSchool;
+exports.registerAgain = registerAgain;
 exports.cancelRegister = cancelRegister;

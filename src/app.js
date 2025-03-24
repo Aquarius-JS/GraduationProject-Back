@@ -14,6 +14,7 @@ const {
   getVehicleInfoByStu,
   vehicleRegistration,
   confirmEnterSchool,
+  registerAgain,
   cancelRegister,
 } = require('./controller/user');
 const { getRegisterInfo, approveRegister, rejectRegister } = require('./controller/admin');
@@ -43,6 +44,7 @@ app.post('/admin/getRegisterInfo', getRegisterInfo);
 app.post('/admin/approveRegister', approveRegister);
 app.post('/admin/rejectRegister', rejectRegister);
 app.post('/confirmEnterSchool', confirmEnterSchool);
+app.post('/registerAgain', registerAgain);
 app.post('/cancelRegister', cancelRegister);
 
 app.listen(port, () => {
