@@ -156,6 +156,23 @@ async function confirmEnterSchool(req, res) {
   }
 }
 
+/**
+ * 学生取消登记操作
+ * @param {*} req
+ * @param {*} res
+ */
+async function cancelRegister(req, res) {
+  const canBeChangeCancel = [0, 1, 2, 5];
+  const { registerId } = req.body;
+  const registerInfo = await getVehicleRegistrationInfoById(registerId);
+  if (canBeChangeCancel.includes(registerInfo?.vehicle_status)) {
+    await updateVehicleRegistrationInfoById(registerId, 6);
+    res.json({ isOk: true, message: '操作成功', vehicle_status: 6 });
+  } else {
+    res.json({ isOk: false, message: '申请信息发生变化，稍后重试' });
+  }
+}
+
 exports.login = login;
 exports.getStuInfo = getStuInfo;
 exports.getStudentAndVehicleInfo = getStudentAndVehicleInfo;
@@ -165,3 +182,4 @@ exports.editPassword = editPassword;
 exports.getVehicleInfoByStu = getVehicleInfoByStu;
 exports.vehicleRegistration = vehicleRegistration;
 exports.confirmEnterSchool = confirmEnterSchool;
+exports.cancelRegister = cancelRegister;

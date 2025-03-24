@@ -14,6 +14,7 @@ const {
   getVehicleInfoByStu,
   vehicleRegistration,
   confirmEnterSchool,
+  cancelRegister,
 } = require('./controller/user');
 const { getRegisterInfo, approveRegister, rejectRegister } = require('./controller/admin');
 const { port, bodyMaxValue } = require('./config/appConfig');
@@ -42,6 +43,7 @@ app.post('/admin/getRegisterInfo', getRegisterInfo);
 app.post('/admin/approveRegister', approveRegister);
 app.post('/admin/rejectRegister', rejectRegister);
 app.post('/confirmEnterSchool', confirmEnterSchool);
+app.post('/cancelRegister', cancelRegister);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
