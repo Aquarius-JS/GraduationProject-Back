@@ -9,6 +9,7 @@ const {
   getPasswordByStuNumber,
   updatePassword,
   creatVehicleRegistrationInfo,
+  updateVehicleRegisterInfo,
 } = require('../model/userInfo');
 const { getVehicleRegistrationInfoById, updateVehicleRegistrationInfoById } = require('../model/userInfo');
 const fileStreamToResUrl = require('../service/share/base64url');
@@ -189,6 +190,50 @@ async function cancelRegister(req, res) {
   }
 }
 
+/**
+ * 车辆离校登记接口
+ * @param {*} req
+ * @param {*} res
+ */
+async function leavingRegister(req, res) {
+  const { registerId } = req.body;
+  const registerInfo = await getVehicleRegistrationInfoById(registerId);
+  if (registerInfo?.vehicle_status === 3) {
+    await updateVehicleRegistrationInfoById(registerId, 4);
+    res.json({ isOk: true, message: '操作成功', vehicle_status: 4 });
+  } else {
+    res.json({ isOk: false, message: '申请信息发生变化，稍后重试' });
+  }
+}
+
+/**
+ * 审批拒绝后再次提交申请接口
+ * @param {*} req
+ * @param {*} res
+ */
+async function modificationRegisterInfo(req, res) {
+  const id = req.body.registerId;
+  const license_number = req.body.license_number;
+  const vehicle_type = req.body.vehicle_type;
+  const vehicle_status = 1; //登记状态
+  const stu_card_img = req.body.stu_card_img;
+  const vehicle_img = req.body.vehicle_img;
+  const license_img = req.body.license_img;
+  await updateVehicleRegisterInfo(
+    license_number,
+    vehicle_type,
+    vehicle_status,
+    stu_card_img,
+    vehicle_img,
+    license_img,
+    id
+  );
+  res.send({
+    isOk: true,
+    message: '提交成功',
+  });
+}
+
 exports.login = login;
 exports.getStuInfo = getStuInfo;
 exports.getStudentAndVehicleInfo = getStudentAndVehicleInfo;
@@ -200,3 +245,5 @@ exports.vehicleRegistration = vehicleRegistration;
 exports.confirmEnterSchool = confirmEnterSchool;
 exports.registerAgain = registerAgain;
 exports.cancelRegister = cancelRegister;
+exports.leavingRegister = leavingRegister;
+exports.modificationRegisterInfo = modificationRegisterInfo;

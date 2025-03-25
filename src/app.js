@@ -16,6 +16,8 @@ const {
   confirmEnterSchool,
   registerAgain,
   cancelRegister,
+  leavingRegister,
+  modificationRegisterInfo,
 } = require('./controller/user');
 const { getRegisterInfo, approveRegister, rejectRegister } = require('./controller/admin');
 const { port, bodyMaxValue } = require('./config/appConfig');
@@ -46,6 +48,8 @@ app.post('/admin/rejectRegister', rejectRegister);
 app.post('/confirmEnterSchool', confirmEnterSchool);
 app.post('/registerAgain', registerAgain);
 app.post('/cancelRegister', cancelRegister);
+app.post('/leavingRegister', leavingRegister);
+app.post('/modificationRegisterInfo', modificationRegisterInfo);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
