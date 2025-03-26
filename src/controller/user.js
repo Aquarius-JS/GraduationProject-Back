@@ -212,6 +212,12 @@ async function leavingRegister(req, res) {
  * @param {*} res
  */
 async function modificationRegisterInfo(req, res) {
+  const { registerId } = req.body;
+  const registerInfo = await getVehicleRegistrationInfoById(registerId);
+  if (registerInfo?.vehicle_status !== 0) {
+    res.json({ isOk: false, message: '申请信息发生变化，稍后重试' });
+    return;
+  }
   const id = req.body.registerId;
   const license_number = req.body.license_number;
   const vehicle_type = req.body.vehicle_type;
