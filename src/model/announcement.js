@@ -27,4 +27,12 @@ async function selectAnnouncementBasicInfo() {
   return results;
 }
 
+async function selectAnnouncementInfoById(id) {
+  const connection = await createConnection();
+  const [results] = await connection.query('SELECT * FROM `announcement` where id = ?', [id]);
+  connection.end();
+  return results[0];
+}
+
 exports.selectAnnouncementBasicInfo = selectAnnouncementBasicInfo;
+exports.selectAnnouncementInfoById = selectAnnouncementInfoById;
