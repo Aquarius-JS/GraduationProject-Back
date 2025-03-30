@@ -3,6 +3,7 @@ const {
   selectAnnouncementBasicInfo,
   selectAnnouncementInfoById,
   createAnnouncement,
+  updateAnnouncementContentAndTime,
 } = require('../model/announcement');
 
 /**
@@ -43,6 +44,20 @@ async function addAnnouncementInfo(req, res) {
   res.json({ isOk: true, message: '操作成功', data: { id } });
 }
 
+/**
+ * 根据id更新公告内容
+ * @param {*} req
+ * @param {*} res
+ */
+async function updateAnnouncementContentById(req, res) {
+  const id = req.body.announcementId;
+  const content = req.body.content;
+  const updated_at = curUnixDate();
+  await updateAnnouncementContentAndTime(id, content, updated_at);
+  res.json({ isOk: true, message: '保存成功' });
+}
+
 exports.getAnnouncementBasicInfo = getAnnouncementBasicInfo;
 exports.getAnnouncementInfoById = getAnnouncementInfoById;
 exports.addAnnouncementInfo = addAnnouncementInfo;
+exports.updateAnnouncementContentById = updateAnnouncementContentById;
