@@ -20,7 +20,7 @@ const {
   modificationRegisterInfo,
 } = require('./controller/user');
 const { getRegisterInfo, approveRegister, rejectRegister } = require('./controller/admin');
-const { getAnnouncementBasicInfo, getAnnouncementInfoById } = require('./controller/announcement');
+const { getAnnouncementBasicInfo, getAnnouncementInfoById, addAnnouncementInfo } = require('./controller/announcement');
 const { port, bodyMaxValue } = require('./config/appConfig');
 const app = express();
 const upload = multer(); // for parsing multipart/form-data
@@ -54,6 +54,7 @@ app.post('/modificationRegisterInfo', modificationRegisterInfo);
 
 app.post('/getAnnouncementBasicInfo', getAnnouncementBasicInfo);
 app.post('/getAnnouncementInfoById', getAnnouncementInfoById);
+app.post('/addAnnouncementInfo', addAnnouncementInfo);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

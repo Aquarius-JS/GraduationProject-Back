@@ -27,6 +27,11 @@ async function selectAnnouncementBasicInfo() {
   return results;
 }
 
+/**
+ * 根据公告id查询公告详情
+ * @param {*} id
+ * @returns
+ */
 async function selectAnnouncementInfoById(id) {
   const connection = await createConnection();
   const [results] = await connection.query('SELECT * FROM `announcement` where id = ?', [id]);
@@ -34,5 +39,19 @@ async function selectAnnouncementInfoById(id) {
   return results[0];
 }
 
+/**
+ * 创建公告sql
+ * @param {*} params
+ */
+async function createAnnouncement(...args) {
+  const connection = await createConnection();
+  await connection.query(
+    'INSERT INTO `announcement` (id, title, content, status,publish_time, expire_time, updated_at) VALUES (?,?,?,?,?,?,?)',
+    [...args]
+  );
+  connection.end();
+}
+
 exports.selectAnnouncementBasicInfo = selectAnnouncementBasicInfo;
 exports.selectAnnouncementInfoById = selectAnnouncementInfoById;
+exports.createAnnouncement = createAnnouncement;
