@@ -52,11 +52,11 @@ async function createAnnouncement(...args) {
   connection.end();
 }
 
-async function updateAnnouncementContentAndTime(id, content, update_at) {
+async function updateAnnouncementContentAndTime(id, content, updated_at) {
   const connection = await createConnection();
-  await connection.query('UPDATE `announcement` SET `content` = ?, update_at = ? WHERE `id` = ?', [
+  await connection.query('UPDATE `announcement` SET `content` = ?, updated_at = ? WHERE `id` = ?', [
     content,
-    update_at,
+    updated_at,
     id,
   ]);
   connection.end();
