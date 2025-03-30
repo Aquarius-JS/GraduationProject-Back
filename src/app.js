@@ -25,6 +25,7 @@ const {
   getAnnouncementInfoById,
   addAnnouncementInfo,
   updateAnnouncementContentById,
+  updateAnnouncementTitleById,
 } = require('./controller/announcement');
 const { port, bodyMaxValue } = require('./config/appConfig');
 const app = express();
@@ -60,6 +61,7 @@ app.post('/modificationRegisterInfo', modificationRegisterInfo);
 app.post('/getAnnouncementBasicInfo', getAnnouncementBasicInfo);
 app.post('/getAnnouncementInfoById', getAnnouncementInfoById);
 app.post('/addAnnouncementInfo', addAnnouncementInfo);
+app.post('/updateAnnouncementTitleById', updateAnnouncementTitleById);
 app.post('/updateAnnouncementContentById', updateAnnouncementContentById);
 
 app.listen(port, () => {

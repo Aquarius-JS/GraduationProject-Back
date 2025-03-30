@@ -52,6 +52,16 @@ async function createAnnouncement(...args) {
   connection.end();
 }
 
+async function updateAnnouncementTitleAndTime(id, title, updated_at) {
+  const connection = await createConnection();
+  await connection.query('UPDATE `announcement` SET `title` = ?, updated_at = ? WHERE `id` = ?', [
+    title,
+    updated_at,
+    id,
+  ]);
+  connection.end();
+}
+
 async function updateAnnouncementContentAndTime(id, content, updated_at) {
   const connection = await createConnection();
   await connection.query('UPDATE `announcement` SET `content` = ?, updated_at = ? WHERE `id` = ?', [
@@ -65,4 +75,5 @@ async function updateAnnouncementContentAndTime(id, content, updated_at) {
 exports.selectAnnouncementBasicInfo = selectAnnouncementBasicInfo;
 exports.selectAnnouncementInfoById = selectAnnouncementInfoById;
 exports.createAnnouncement = createAnnouncement;
+exports.updateAnnouncementTitleAndTime = updateAnnouncementTitleAndTime;
 exports.updateAnnouncementContentAndTime = updateAnnouncementContentAndTime;
