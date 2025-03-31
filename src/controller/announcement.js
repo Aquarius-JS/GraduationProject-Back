@@ -5,6 +5,7 @@ const {
   createAnnouncement,
   updateAnnouncementTitleAndTime,
   updateAnnouncementContentAndTime,
+  updateAnnouncementStatus,
 } = require('../model/announcement');
 
 /**
@@ -71,8 +72,20 @@ async function updateAnnouncementContentById(req, res) {
   res.json({ isOk: true, message: '保存成功' });
 }
 
+async function publishAnnouncement(req, res) {
+  const id = req.body.announcementId;
+  const announcementInfo = await selectAnnouncementInfoById(id);
+  if (announcementInfo.status !== 1) {
+    res.json({ isOk: false, message: '信息已过期，请稍后重试' });
+    return;
+  }
+  await updateAnnouncementStatus(id, 2);
+  res.json({ isOk: true, message: '发布成功' });
+}
+
 exports.getAnnouncementBasicInfo = getAnnouncementBasicInfo;
 exports.getAnnouncementInfoById = getAnnouncementInfoById;
 exports.addAnnouncementInfo = addAnnouncementInfo;
 exports.updateAnnouncementTitleById = updateAnnouncementTitleById;
 exports.updateAnnouncementContentById = updateAnnouncementContentById;
+exports.publishAnnouncement = publishAnnouncement;

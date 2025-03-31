@@ -26,6 +26,7 @@ const {
   addAnnouncementInfo,
   updateAnnouncementContentById,
   updateAnnouncementTitleById,
+  publishAnnouncement,
 } = require('./controller/announcement');
 const { port, bodyMaxValue } = require('./config/appConfig');
 const app = express();
@@ -63,6 +64,7 @@ app.post('/getAnnouncementInfoById', getAnnouncementInfoById);
 app.post('/addAnnouncementInfo', addAnnouncementInfo);
 app.post('/updateAnnouncementTitleById', updateAnnouncementTitleById);
 app.post('/updateAnnouncementContentById', updateAnnouncementContentById);
+app.post('/publishAnnouncement', publishAnnouncement);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

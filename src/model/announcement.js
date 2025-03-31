@@ -52,6 +52,12 @@ async function createAnnouncement(...args) {
   connection.end();
 }
 
+/**
+ * 更新公告标题
+ * @param {*} id
+ * @param {*} title
+ * @param {*} updated_at
+ */
 async function updateAnnouncementTitleAndTime(id, title, updated_at) {
   const connection = await createConnection();
   await connection.query('UPDATE `announcement` SET `title` = ?, updated_at = ? WHERE `id` = ?', [
@@ -62,6 +68,12 @@ async function updateAnnouncementTitleAndTime(id, title, updated_at) {
   connection.end();
 }
 
+/**
+ * 更新公告内容
+ * @param {*} id
+ * @param {*} content
+ * @param {*} updated_at
+ */
 async function updateAnnouncementContentAndTime(id, content, updated_at) {
   const connection = await createConnection();
   await connection.query('UPDATE `announcement` SET `content` = ?, updated_at = ? WHERE `id` = ?', [
@@ -72,8 +84,20 @@ async function updateAnnouncementContentAndTime(id, content, updated_at) {
   connection.end();
 }
 
+/**
+ * 更新公告状态sql
+ * @param {*} id
+ * @param {*} status
+ */
+async function updateAnnouncementStatus(id, status) {
+  const connection = await createConnection();
+  await connection.query('UPDATE `announcement` SET `status` = ? WHERE `id` = ?', [status, id]);
+  connection.end();
+}
+
 exports.selectAnnouncementBasicInfo = selectAnnouncementBasicInfo;
 exports.selectAnnouncementInfoById = selectAnnouncementInfoById;
 exports.createAnnouncement = createAnnouncement;
 exports.updateAnnouncementTitleAndTime = updateAnnouncementTitleAndTime;
 exports.updateAnnouncementContentAndTime = updateAnnouncementContentAndTime;
+exports.updateAnnouncementStatus = updateAnnouncementStatus;
