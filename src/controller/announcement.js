@@ -109,6 +109,17 @@ async function unpublishAnnouncement(req, res) {
   res.json({ isOk: true, message: '取消发布成功' });
 }
 
+/**
+ * 删除接口，将status改为状态3
+ * @param {*} req
+ * @param {*} res
+ */
+async function deleteAnnouncement(req, res) {
+  const id = req.body.announcementId;
+  await updateAnnouncementStatus(id, 3);
+  res.json({ isOk: true, message: '操作成功' });
+}
+
 exports.getAnnouncementBasicInfo = getAnnouncementBasicInfo;
 exports.getAnnouncementInfoById = getAnnouncementInfoById;
 exports.addAnnouncementInfo = addAnnouncementInfo;
@@ -116,3 +127,4 @@ exports.updateAnnouncementTitleById = updateAnnouncementTitleById;
 exports.updateAnnouncementContentById = updateAnnouncementContentById;
 exports.publishAnnouncement = publishAnnouncement;
 exports.unpublishAnnouncement = unpublishAnnouncement;
+exports.deleteAnnouncement = deleteAnnouncement;
