@@ -95,9 +95,16 @@ async function updateAnnouncementStatus(id, status) {
   connection.end();
 }
 
+async function updateAnnouncementPublishTime(id, publishTime) {
+  const connection = await createConnection();
+  await connection.query('UPDATE `announcement` SET `publish_time` = ? WHERE `id` = ?', [publishTime, id]);
+  connection.end();
+}
+
 exports.selectAnnouncementBasicInfo = selectAnnouncementBasicInfo;
 exports.selectAnnouncementInfoById = selectAnnouncementInfoById;
 exports.createAnnouncement = createAnnouncement;
 exports.updateAnnouncementTitleAndTime = updateAnnouncementTitleAndTime;
 exports.updateAnnouncementContentAndTime = updateAnnouncementContentAndTime;
 exports.updateAnnouncementStatus = updateAnnouncementStatus;
+exports.updateAnnouncementPublishTime = updateAnnouncementPublishTime;

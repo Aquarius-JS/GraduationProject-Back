@@ -6,6 +6,7 @@ const {
   updateAnnouncementTitleAndTime,
   updateAnnouncementContentAndTime,
   updateAnnouncementStatus,
+  updateAnnouncementPublishTime,
 } = require('../model/announcement');
 
 /**
@@ -86,6 +87,7 @@ async function publishAnnouncement(req, res) {
     return;
   }
   await updateAnnouncementStatus(id, 2);
+  await updateAnnouncementPublishTime(id, curUnixDate());
   res.json({ isOk: true, message: '发布成功' });
 }
 
@@ -103,6 +105,7 @@ async function unpublishAnnouncement(req, res) {
     return;
   }
   await updateAnnouncementStatus(id, 1);
+  await updateAnnouncementPublishTime(id, null);
   res.json({ isOk: true, message: '取消发布成功' });
 }
 
