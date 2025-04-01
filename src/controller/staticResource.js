@@ -6,7 +6,7 @@ const saveFile = require('../service/saveFile');
  */
 async function uploadFile(req, res) {
   const fileName = await saveFile(req);
-  res.json(JSON.stringify({ fileName, url: `http://localhost:3000/upload/${fileName}` }));
+  res.json({ fileName, url: `http://localhost:3000/upload/${fileName}` });
 }
 
 exports.uploadFile = uploadFile;
