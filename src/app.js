@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const multer = require('multer');
 const bodyParser = require('body-parser');
@@ -30,6 +31,7 @@ const {
   unpublishAnnouncement,
   deleteAnnouncement,
 } = require('./controller/announcement');
+const { uploadFile } = require('./controller/staticResource');
 const { port, bodyMaxValue } = require('./config/appConfig');
 const app = express();
 const upload = multer(); // for parsing multipart/form-data
@@ -41,6 +43,8 @@ app.use(isLoginMiddleware); // for checking login status
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.raw({ type: 'application/*', limit: 1024 * 1024 * 5 }));
 app.use(bodyParser.raw({ type: 'image/*', limit: 1024 * 1024 * 5 }));
+
+app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
 app.post('/login', login);
 app.post('/getStudentAndVehicleInfo', getStudentAndVehicleInfo);
@@ -69,6 +73,8 @@ app.post('/updateAnnouncementContentById', updateAnnouncementContentById);
 app.post('/publishAnnouncement', publishAnnouncement);
 app.post('/unpublishAnnouncement', unpublishAnnouncement);
 app.post('/deleteAnnouncement', deleteAnnouncement);
+
+app.post('/uploadFile', upload.array(), uploadFile);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
