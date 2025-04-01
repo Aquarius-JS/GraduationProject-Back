@@ -101,6 +101,12 @@ async function updateAnnouncementPublishTime(id, publishTime) {
   connection.end();
 }
 
+async function updateAnnouncementAttachedFileListInfo(id, listInfo) {
+  const connection = await createConnection();
+  await connection.query('UPDATE `announcement` SET `attached_file_list_info` = ? WHERE `id` = ?', [listInfo, id]);
+  connection.end();
+}
+
 exports.selectAnnouncementBasicInfo = selectAnnouncementBasicInfo;
 exports.selectAnnouncementInfoById = selectAnnouncementInfoById;
 exports.createAnnouncement = createAnnouncement;
@@ -108,3 +114,4 @@ exports.updateAnnouncementTitleAndTime = updateAnnouncementTitleAndTime;
 exports.updateAnnouncementContentAndTime = updateAnnouncementContentAndTime;
 exports.updateAnnouncementStatus = updateAnnouncementStatus;
 exports.updateAnnouncementPublishTime = updateAnnouncementPublishTime;
+exports.updateAnnouncementAttachedFileListInfo = updateAnnouncementAttachedFileListInfo;

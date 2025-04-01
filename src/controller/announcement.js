@@ -7,6 +7,7 @@ const {
   updateAnnouncementContentAndTime,
   updateAnnouncementStatus,
   updateAnnouncementPublishTime,
+  updateAnnouncementAttachedFileListInfo,
 } = require('../model/announcement');
 
 /**
@@ -120,6 +121,13 @@ async function deleteAnnouncement(req, res) {
   res.json({ isOk: true, message: '操作成功' });
 }
 
+async function updateAttachedFileListInfo(req, res) {
+  const id = req.body.announcementId;
+  const listInfo = JSON.stringify(req.body.listInfo);
+  await updateAnnouncementAttachedFileListInfo(id, listInfo);
+  res.json({ isOk: true, message: '保存成功' });
+}
+
 exports.getAnnouncementBasicInfo = getAnnouncementBasicInfo;
 exports.getAnnouncementInfoById = getAnnouncementInfoById;
 exports.addAnnouncementInfo = addAnnouncementInfo;
@@ -128,3 +136,4 @@ exports.updateAnnouncementContentById = updateAnnouncementContentById;
 exports.publishAnnouncement = publishAnnouncement;
 exports.unpublishAnnouncement = unpublishAnnouncement;
 exports.deleteAnnouncement = deleteAnnouncement;
+exports.updateAttachedFileListInfo = updateAttachedFileListInfo;

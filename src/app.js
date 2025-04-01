@@ -30,6 +30,7 @@ const {
   publishAnnouncement,
   unpublishAnnouncement,
   deleteAnnouncement,
+  updateAttachedFileListInfo,
 } = require('./controller/announcement');
 const { uploadFile } = require('./controller/staticResource');
 const { port, bodyMaxValue } = require('./config/appConfig');
@@ -73,6 +74,7 @@ app.post('/updateAnnouncementContentById', updateAnnouncementContentById);
 app.post('/publishAnnouncement', publishAnnouncement);
 app.post('/unpublishAnnouncement', unpublishAnnouncement);
 app.post('/deleteAnnouncement', deleteAnnouncement);
+app.post('/updateAttachedFileListInfo', updateAttachedFileListInfo);
 
 app.post('/uploadFile', upload.array(), uploadFile);
 
