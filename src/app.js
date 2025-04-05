@@ -44,6 +44,7 @@ app.use(isLoginMiddleware); // for checking login status
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.raw({ type: 'application/*', limit: 1024 * 1024 * 5 }));
 app.use(bodyParser.raw({ type: 'image/*', limit: 1024 * 1024 * 5 }));
+app.use(bodyParser.raw({ type: 'video/*', limit: 1024 * 1024 * 100 }));
 
 app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
