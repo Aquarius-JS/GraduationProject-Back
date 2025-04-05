@@ -32,6 +32,7 @@ const {
   deleteAnnouncement,
   updateAttachedFileListInfo,
 } = require('./controller/announcement');
+const { violationInfoReporting } = require('./controller/violation');
 const { uploadFile } = require('./controller/staticResource');
 const { port, bodyMaxValue } = require('./config/appConfig');
 const app = express();
@@ -78,6 +79,8 @@ app.post('/deleteAnnouncement', deleteAnnouncement);
 app.post('/updateAttachedFileListInfo', updateAttachedFileListInfo);
 
 app.post('/uploadFile', upload.array(), uploadFile);
+
+app.post('/violationInfoReporting', violationInfoReporting);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
