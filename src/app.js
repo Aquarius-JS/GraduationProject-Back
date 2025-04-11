@@ -32,7 +32,8 @@ const {
   deleteAnnouncement,
   updateAttachedFileListInfo,
 } = require('./controller/announcement');
-const { violationInfoReporting } = require('./controller/violation');
+const { getVehicleRegisterInfoByLicense } = require('./controller/vehicleRegistrationInfo');
+const { violationInfoReporting, unregisteredVehicleDetection } = require('./controller/violation');
 const { uploadFile } = require('./controller/staticResource');
 const { port, bodyMaxValue } = require('./config/appConfig');
 const app = express();
@@ -57,6 +58,7 @@ app.post('/editPassword', editPassword);
 app.post('/getStuInfo', getStuInfo);
 
 app.post('/getVehicleInfoByStu', getVehicleInfoByStu);
+app.post('/getVehicleRegisterInfoByLicense', getVehicleRegisterInfoByLicense);
 app.post('/vehicleRegistration', vehicleRegistration);
 
 app.post('/admin/getRegisterInfo', getRegisterInfo);
@@ -80,6 +82,7 @@ app.post('/updateAttachedFileListInfo', updateAttachedFileListInfo);
 
 app.post('/uploadFile', upload.array(), uploadFile);
 
+app.post('unregisteredVehicleDetection', unregisteredVehicleDetection);  // TODO:完善
 app.post('/violationInfoReporting', violationInfoReporting);
 
 app.listen(port, () => {
