@@ -115,7 +115,7 @@ async function getVehicleInfoByStu(req, res) {
 async function vehicleRegistration(req, res) {
   const id = curUnixDate(); // TODO: 生成唯一id
   const stu_number = req.stuNumberByToken;
-  const license_number = req.body.license_number;
+  const license_number = req.body.license_number.toUpperCase();
   const vehicle_type = req.body.vehicle_type;
   const vehicle_status = 1; //登记状态
   const stu_card_img = req.body.stu_card_img;
@@ -219,7 +219,7 @@ async function modificationRegisterInfo(req, res) {
     return;
   }
   const id = req.body.registerId;
-  const license_number = req.body.license_number;
+  const license_number = req.body.license_number.toUpperCase();
   const vehicle_type = req.body.vehicle_type;
   const vehicle_status = 1; //登记状态
   const stu_card_img = req.body.stu_card_img;
