@@ -32,8 +32,12 @@ const {
   deleteAnnouncement,
   updateAttachedFileListInfo,
 } = require('./controller/announcement');
-const { getVehicleRegisterInfoByLicense } = require('./controller/vehicleRegistrationInfo');
-const { violationInfoReporting, unregisteredVehicleDetection } = require('./controller/violation');
+const {
+  getVehicleRegisterInfoByStuNumber,
+  getVehicleRegisterInfoByLicense,
+} = require('./controller/vehicleRegistrationInfo');
+const { violationInfoReporting } = require('./controller/violation');
+const { unregisteredVehicleInfoReporting } = require('./controller/unregisteredVehicleInfo');
 const { uploadFile } = require('./controller/staticResource');
 const { port, bodyMaxValue } = require('./config/appConfig');
 const app = express();
@@ -51,13 +55,14 @@ app.use(bodyParser.raw({ type: 'video/*', limit: 1024 * 1024 * 100 }));
 app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
 app.post('/login', login);
-app.post('/getStudentAndVehicleInfo', getStudentAndVehicleInfo);
+app.post('/getStudentAndVehicleInfo', getStudentAndVehicleInfo); //token
 app.post('/uploadStuAvatar', upload.array(), uploadStuAvatar);
 app.post('/updateStuInfo', updateStuInfo);
 app.post('/editPassword', editPassword);
 app.post('/getStuInfo', getStuInfo);
 
-app.post('/getVehicleInfoByStu', getVehicleInfoByStu);
+app.post('/getVehicleInfoByStu', getVehicleInfoByStu); // 根据token获取车辆信息
+app.post('/getVehicleRegisterInfoByStuNumber', getVehicleRegisterInfoByStuNumber);
 app.post('/getVehicleRegisterInfoByLicense', getVehicleRegisterInfoByLicense);
 app.post('/vehicleRegistration', vehicleRegistration);
 
@@ -82,7 +87,8 @@ app.post('/updateAttachedFileListInfo', updateAttachedFileListInfo);
 
 app.post('/uploadFile', upload.array(), uploadFile);
 
-app.post('unregisteredVehicleDetection', unregisteredVehicleDetection);  // TODO:完善
+app.post('/unregisteredVehicleInfoReporting', unregisteredVehicleInfoReporting);
+
 app.post('/violationInfoReporting', violationInfoReporting);
 
 app.listen(port, () => {
