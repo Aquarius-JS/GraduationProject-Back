@@ -8,19 +8,24 @@ const { createUnregisteredVehicleInfo } = require('../model/unregisteredVehicleI
  * @param {*} res
  */
 async function unregisteredVehicleInfoReporting(req, res) {
-  const { license_number } = req.body;
-  const registerList = await selectVehicelRegisterInfoByLicense(license_number);
+  const { licenseNumber, detectionLocation, imgList, reportingSource } = req.body;
+  const registerList = await selectVehicelRegisterInfoByLicense(licenseNumber);
   if (registerList.length > 0) {
     res.send({
       isOk: false,
-      message: '该车辆已登记',
+      message: '该车辆存在登记信息',
     });
   } else {
     const id = curUnixDate();
-    const img_list = req.body.img_list;
-    const reporting_time = req.body.reporting_time;
-    const reporting_source = req.body.reporting_source;
-    await createUnregisteredVehicleInfo(id, license_number, img_list, reporting_time, reporting_source);
+    const reporting_time = curUnixDate();
+    await createUnregisteredVehicleInfo(
+      id,
+      licenseNumber,
+      detectionLocation,
+      JSON.stringify(imgList),
+      reporting_time,
+      reportingSource
+    );
     res.send({
       isOk: true,
       message: '未登记车辆信息提交成功',

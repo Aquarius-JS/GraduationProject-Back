@@ -18,15 +18,23 @@ async function createConnection() {
  * create未登记车辆信息
  * @param {*} id
  * @param {*} license_number
+ * @param {*} detection_location
  * @param {*} img_list
  * @param {*} reporting_time
  * @param {*} reporting_source
  */
-async function createUnregisteredVehicleInfo(id, license_number, img_list, reporting_time, reporting_source) {
+async function createUnregisteredVehicleInfo(
+  id,
+  license_number,
+  detection_location,
+  img_list,
+  reporting_time,
+  reporting_source
+) {
   const connection = await createConnection();
   await connection.query(
-    'INSERT INTO `unregistered_vehicle_info` (id, license_number, img_list, reporting_time,reporting_source) VALUES (?,?,?,?,?)',
-    [id, license_number, img_list, reporting_time, reporting_source]
+    'INSERT INTO `unregistered_vehicle_info` (id, license_number, detection_location, img_list, reporting_time,reporting_source) VALUES (?,?,?,?,?,?)',
+    [id, license_number, detection_location, img_list, reporting_time, reporting_source]
   );
   connection.end();
 }
