@@ -18,17 +18,39 @@ async function createConnection() {
  * 创新违规信息上报sql
  * @param {*} id
  * @param {*} license_number
- * @param {*} title
- * @param {*} content
+ * @param {*} violation_title
+ * @param {*} violation_content
+ * @param {*} detection_location
+ * @param {*} img_list
  * @param {*} reporting_time
  * @param {*} reporting_source
  * @param {*} status
  */
-async function createViolationInfo(id, license_number, title, content, reporting_time, reporting_source, status) {
+async function createViolationInfo(
+  id,
+  license_number,
+  violation_title,
+  violation_content,
+  detection_location,
+  img_list,
+  reporting_time,
+  reporting_source,
+  status
+) {
   const connection = await createConnection();
   await connection.query(
-    'INSERT INTO `violation_info` (id, license_number, title, content,reporting_time, reporting_source, status) VALUES (?,?,?,?,?,?,?)',
-    [id, license_number, title, content, reporting_time, reporting_source, status]
+    'INSERT INTO `violation_info` (id, license_number, violation_title, violation_content, detection_location, img_list, reporting_time, reporting_source, status) VALUES (?,?,?,?,?,?,?,?,?)',
+    [
+      id,
+      license_number,
+      violation_title,
+      violation_content,
+      detection_location,
+      img_list,
+      reporting_time,
+      reporting_source,
+      status,
+    ]
   );
   connection.end();
 }
