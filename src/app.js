@@ -94,7 +94,7 @@ app.post('/uploadFile', upload.array(), uploadFile);
 app.post('/imgOcr', upload.array(), imgOcr);
 
 app.post('/unregisteredVehicleInfoReporting', unregisteredVehicleInfoReporting);
-app.post('getAllUnregisteredVehicleInfo', getAllUnregisteredVehicleInfo);
+app.post('/getAllUnregisteredVehicleInfo', getAllUnregisteredVehicleInfo);
 
 app.post('/violationInfoReporting', violationInfoReporting);
 app.post('/getAllViolationInfo', getAllViolationInfo);
