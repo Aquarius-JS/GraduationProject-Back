@@ -39,6 +39,7 @@ const {
 const { violationInfoReporting } = require('./controller/violation');
 const { unregisteredVehicleInfoReporting } = require('./controller/unregisteredVehicleInfo');
 const { uploadFile } = require('./controller/staticResource');
+const { imgOcr } = require('./controller/ocr');
 const { port, bodyMaxValue } = require('./config/appConfig');
 const app = express();
 const upload = multer(); // for parsing multipart/form-data
@@ -86,6 +87,8 @@ app.post('/deleteAnnouncement', deleteAnnouncement);
 app.post('/updateAttachedFileListInfo', updateAttachedFileListInfo);
 
 app.post('/uploadFile', upload.array(), uploadFile);
+
+app.post('/imgOcr', upload.array(), imgOcr);
 
 app.post('/unregisteredVehicleInfoReporting', unregisteredVehicleInfoReporting);
 
