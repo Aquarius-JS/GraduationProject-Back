@@ -1,6 +1,6 @@
 const curUnixDate = require('../service/share/curUnixDate');
 const { selectVehicelRegisterInfoByLicense } = require('../model/vehicleRegistrationInfo');
-const { createUnregisteredVehicleInfo } = require('../model/unregisteredVehicleInfo');
+const { createUnregisteredVehicleInfo, selectUnregisteredVehicleInfo } = require('../model/unregisteredVehicleInfo');
 
 /**
  * 未登记车辆信息上报接口
@@ -33,4 +33,19 @@ async function unregisteredVehicleInfoReporting(req, res) {
   }
 }
 
+/**
+ * 获取所有未登记车辆信息
+ * @param {*} req
+ * @param {*} res
+ */
+async function getAllUnregisteredVehicleInfo(req, res) {
+  const unregisteredVehicleInfoList = await selectUnregisteredVehicleInfo();
+  res.send({
+    isOk: true,
+    message: '未登记车辆信息查询成功',
+    data: unregisteredVehicleInfoList,
+  });
+}
+
 exports.unregisteredVehicleInfoReporting = unregisteredVehicleInfoReporting;
+exports.getAllUnregisteredVehicleInfo = getAllUnregisteredVehicleInfo;

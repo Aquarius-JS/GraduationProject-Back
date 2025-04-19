@@ -39,4 +39,12 @@ async function createUnregisteredVehicleInfo(
   connection.end();
 }
 
+async function selectUnregisteredVehicleInfo() {
+  const connection = await createConnection();
+  const [rows] = await connection.query('SELECT * FROM unregistered_vehicle_info');
+  connection.end();
+  return rows;
+}
+
 exports.createUnregisteredVehicleInfo = createUnregisteredVehicleInfo;
+exports.selectUnregisteredVehicleInfo = selectUnregisteredVehicleInfo;

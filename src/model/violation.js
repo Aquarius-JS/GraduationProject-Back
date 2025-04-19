@@ -55,4 +55,12 @@ async function createViolationInfo(
   connection.end();
 }
 
+async function selectViolationInfo() {
+  const connection = await createConnection();
+  const [rows] = await connection.query('SELECT * FROM violation_info');
+  connection.end();
+  return rows;
+}
+
 exports.createViolationInfo = createViolationInfo;
+exports.selectViolationInfo = selectViolationInfo;

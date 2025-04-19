@@ -1,5 +1,5 @@
 const curUnixDate = require('../service/share/curUnixDate');
-const { createViolationInfo } = require('../model/violation');
+const { createViolationInfo, selectViolationInfo } = require('../model/violation');
 
 /**
  * 违规信息上报接口
@@ -34,4 +34,17 @@ async function violationInfoReporting(req, res) {
   });
 }
 
+/**
+ *
+ */
+async function getAllViolationInfo(req, res) {
+  const violationInfo = await selectViolationInfo();
+  res.send({
+    isOk: true,
+    message: '违规信息获取成功',
+    data: violationInfo,
+  });
+}
+
 exports.violationInfoReporting = violationInfoReporting;
+exports.getAllViolationInfo = getAllViolationInfo;

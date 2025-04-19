@@ -36,8 +36,11 @@ const {
   getVehicleRegisterInfoByStuNumber,
   getVehicleRegisterInfoByLicense,
 } = require('./controller/vehicleRegistrationInfo');
-const { violationInfoReporting } = require('./controller/violation');
-const { unregisteredVehicleInfoReporting } = require('./controller/unregisteredVehicleInfo');
+const { violationInfoReporting, getAllViolationInfo } = require('./controller/violation');
+const {
+  unregisteredVehicleInfoReporting,
+  getAllUnregisteredVehicleInfo,
+} = require('./controller/unregisteredVehicleInfo');
 const { uploadFile } = require('./controller/staticResource');
 const { imgOcr } = require('./controller/ocr');
 const { port, bodyMaxValue } = require('./config/appConfig');
@@ -91,8 +94,10 @@ app.post('/uploadFile', upload.array(), uploadFile);
 app.post('/imgOcr', upload.array(), imgOcr);
 
 app.post('/unregisteredVehicleInfoReporting', unregisteredVehicleInfoReporting);
+app.post('getAllUnregisteredVehicleInfo', getAllUnregisteredVehicleInfo);
 
 app.post('/violationInfoReporting', violationInfoReporting);
+app.post('/getAllViolationInfo', getAllViolationInfo);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
