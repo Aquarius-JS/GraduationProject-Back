@@ -1,5 +1,10 @@
 const curUnixDate = require('../service/share/curUnixDate');
-const { createViolationInfo, selectViolationInfo } = require('../model/violation');
+const {
+  createViolationInfo,
+  selectViolationInfo,
+  selectViolationInfoById,
+  updateViolationStatusAndRemarkById,
+} = require('../model/violation');
 
 /**
  * 违规信息上报接口
@@ -35,7 +40,9 @@ async function violationInfoReporting(req, res) {
 }
 
 /**
- *
+ * 获取所有的违规信息
+ * @param {*} req
+ * @param {*} res
  */
 async function getAllViolationInfo(req, res) {
   const violationInfo = await selectViolationInfo();
@@ -46,5 +53,37 @@ async function getAllViolationInfo(req, res) {
   });
 }
 
+/**
+ * 违规信息审批接口
+ * @param {*} req
+ * @param {*} res
+ */
+async function approveViolationInfo(req, res) {
+  const { id, status, remark } = req.body;
+  const violationInfo = await selectViolationInfoById(id);
+  if (!violationInfo) {
+    return res.json({
+      isOk: false,
+      message: '信息不存在，请重试',
+    });
+  } else if (violationInfo.status !== 0) {
+    return res.json({
+      isOk: false,
+      message: '信息状态已过期，请稍后重试',
+    });
+  } else {
+    await updateViolationStatusAndRemarkById(id, status, remark);
+    res.json({
+      isOk: true,
+      message: '审批信息提交成功',
+      data: {
+        id,
+      },
+    });
+  }
+  // const violationInfo = req.body;
+}
+
 exports.violationInfoReporting = violationInfoReporting;
 exports.getAllViolationInfo = getAllViolationInfo;
+exports.approveViolationInfo = approveViolationInfo;

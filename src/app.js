@@ -36,10 +36,11 @@ const {
   getVehicleRegisterInfoByStuNumber,
   getVehicleRegisterInfoByLicense,
 } = require('./controller/vehicleRegistrationInfo');
-const { violationInfoReporting, getAllViolationInfo } = require('./controller/violation');
+const { violationInfoReporting, getAllViolationInfo, approveViolationInfo } = require('./controller/violation');
 const {
   unregisteredVehicleInfoReporting,
   getAllUnregisteredVehicleInfo,
+  approveUnregisteredVehicleInfo,
 } = require('./controller/unregisteredVehicleInfo');
 const { uploadFile } = require('./controller/staticResource');
 const { imgOcr } = require('./controller/ocr');
@@ -95,9 +96,11 @@ app.post('/imgOcr', upload.array(), imgOcr);
 
 app.post('/unregisteredVehicleInfoReporting', unregisteredVehicleInfoReporting);
 app.post('/getAllUnregisteredVehicleInfo', getAllUnregisteredVehicleInfo);
+app.post('/approveUnregisteredVehicleInfo', approveUnregisteredVehicleInfo);
 
 app.post('/violationInfoReporting', violationInfoReporting);
 app.post('/getAllViolationInfo', getAllViolationInfo);
+app.post('/approveViolationInfo', approveViolationInfo);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

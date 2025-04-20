@@ -1,6 +1,11 @@
 const curUnixDate = require('../service/share/curUnixDate');
 const { selectVehicelRegisterInfoByLicense } = require('../model/vehicleRegistrationInfo');
-const { createUnregisteredVehicleInfo, selectUnregisteredVehicleInfo } = require('../model/unregisteredVehicleInfo');
+const {
+  createUnregisteredVehicleInfo,
+  selectUnregisteredVehicleInfo,
+  selectUnregisteredVehicleInfoById,
+  updateUnregisteredInfoStatusAndRemarkById,
+} = require('../model/unregisteredVehicleInfo');
 
 /**
  * 未登记车辆信息上报接口
@@ -8,7 +13,7 @@ const { createUnregisteredVehicleInfo, selectUnregisteredVehicleInfo } = require
  * @param {*} res
  */
 async function unregisteredVehicleInfoReporting(req, res) {
-  const { licenseNumber, detectionLocation, imgList, reportingSource } = req.body;
+  const { licenseNumber, detectionLocation, imgList, reportingSource, status = 0 } = req.body;
   const registerList = await selectVehicelRegisterInfoByLicense(licenseNumber);
   if (registerList.length > 0) {
     res.send({
@@ -24,7 +29,8 @@ async function unregisteredVehicleInfoReporting(req, res) {
       detectionLocation,
       JSON.stringify(imgList),
       reporting_time,
-      reportingSource
+      reportingSource,
+      status
     );
     res.send({
       isOk: true,
@@ -47,5 +53,31 @@ async function getAllUnregisteredVehicleInfo(req, res) {
   });
 }
 
+async function approveUnregisteredVehicleInfo(req, res) {
+  const { id, remark, status } = req.body;
+  const unregisteredInfo = await selectUnregisteredVehicleInfoById(id);
+  if (!unregisteredInfo) {
+    return res.json({
+      idOk: false,
+      message: '信息不存在，请重试',
+    });
+  } else if (unregisteredInfo.status !== 0) {
+    return res.json({
+      idOk: false,
+      message: '信息状态已过期，请稍后重试',
+    });
+  } else {
+    await updateUnregisteredInfoStatusAndRemarkById(id, status, remark);
+    return res.json({
+      isOk: true,
+      message: '审批信息提交成功',
+      data: {
+        id,
+      },
+    });
+  }
+}
+
 exports.unregisteredVehicleInfoReporting = unregisteredVehicleInfoReporting;
 exports.getAllUnregisteredVehicleInfo = getAllUnregisteredVehicleInfo;
+exports.approveUnregisteredVehicleInfo = approveUnregisteredVehicleInfo;

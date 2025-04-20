@@ -62,5 +62,20 @@ async function selectViolationInfo() {
   return rows;
 }
 
+async function selectViolationInfoById(id) {
+  const connection = await createConnection();
+  const [rows] = await connection.query('SELECT * FROM violation_info WHERE id = ?', [id]);
+  connection.end();
+  return rows[0];
+}
+
+async function updateViolationStatusAndRemarkById(id, status, remark) {
+  const connection = await createConnection();
+  await connection.query('UPDATE `violation_info` SET `status` = ?, remark = ? WHERE `id` = ?', [status, remark, id]);
+  connection.end();
+}
+
 exports.createViolationInfo = createViolationInfo;
 exports.selectViolationInfo = selectViolationInfo;
+exports.selectViolationInfoById = selectViolationInfoById;
+exports.updateViolationStatusAndRemarkById = updateViolationStatusAndRemarkById;
