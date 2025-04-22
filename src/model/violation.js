@@ -35,11 +35,12 @@ async function createViolationInfo(
   img_list,
   reporting_time,
   reporting_source,
-  status
+  status,
+  have_read
 ) {
   const connection = await createConnection();
   await connection.query(
-    'INSERT INTO `violation_info` (id, license_number, violation_title, violation_content, detection_location, img_list, reporting_time, reporting_source, status) VALUES (?,?,?,?,?,?,?,?,?)',
+    'INSERT INTO `violation_info` (id, license_number, violation_title, violation_content, detection_location, img_list, reporting_time, reporting_source, status, have_read) VALUES (?,?,?,?,?,?,?,?,?,?)',
     [
       id,
       license_number,
@@ -50,6 +51,7 @@ async function createViolationInfo(
       reporting_time,
       reporting_source,
       status,
+      have_read,
     ]
   );
   connection.end();

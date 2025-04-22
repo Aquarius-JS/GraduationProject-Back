@@ -23,6 +23,7 @@ async function violationInfoReporting(req, res) {
   const reporting_time = curUnixDate();
   const reporting_source = violationInfo.reportingSource;
   const status = violationInfo.status ?? 0; //默认为0，表示未处理
+  const have_read = 0; //默认为0，表示未读
   await createViolationInfo(
     id,
     license_number,
@@ -32,7 +33,8 @@ async function violationInfoReporting(req, res) {
     JSON.stringify(imgList),
     reporting_time,
     reporting_source,
-    status
+    status,
+    have_read
   );
   res.send({
     isOk: true,
