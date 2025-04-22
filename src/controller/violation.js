@@ -4,6 +4,7 @@ const {
   selectViolationInfo,
   selectViolationInfoById,
   updateViolationStatusAndRemarkById,
+  selectViolationInfoByLicenseNumberList,
 } = require('../model/violation');
 
 /**
@@ -84,6 +85,18 @@ async function approveViolationInfo(req, res) {
   // const violationInfo = req.body;
 }
 
+/**
+ * 根据车牌号数组获取违规信息
+ * @param {*} req
+ * @param {*} res
+ */
+async function getViolationInfoByLicenseNumberList(req, res) {
+  const { licenseNumberList } = req.body;
+  const violationInfo = await selectViolationInfoByLicenseNumberList(licenseNumberList);
+  res.json(violationInfo);
+}
+
 exports.violationInfoReporting = violationInfoReporting;
 exports.getAllViolationInfo = getAllViolationInfo;
 exports.approveViolationInfo = approveViolationInfo;
+exports.getViolationInfoByLicenseNumberList = getViolationInfoByLicenseNumberList;

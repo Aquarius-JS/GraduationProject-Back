@@ -75,7 +75,25 @@ async function updateViolationStatusAndRemarkById(id, status, remark) {
   connection.end();
 }
 
+/**
+ * 根据车牌号列表查询违规信息
+ * @param {*} licenseNumberList
+ * @returns
+ */
+async function selectViolationInfoByLicenseNumberList(licenseNumberList) {
+  console.log(licenseNumberList.map(item => "'" + item + "'").join(','));
+  const connection = await createConnection();
+  const [res] = await connection.query(
+    'SELECT * FROM violation_info WHERE license_number IN (' +
+      licenseNumberList.map(item => "'" + item + "'").join(',') +
+      ')'
+  );
+  connection.end();
+  return res;
+}
+
 exports.createViolationInfo = createViolationInfo;
 exports.selectViolationInfo = selectViolationInfo;
 exports.selectViolationInfoById = selectViolationInfoById;
 exports.updateViolationStatusAndRemarkById = updateViolationStatusAndRemarkById;
+exports.selectViolationInfoByLicenseNumberList = selectViolationInfoByLicenseNumberList;

@@ -36,7 +36,12 @@ const {
   getVehicleRegisterInfoByStuNumber,
   getVehicleRegisterInfoByLicense,
 } = require('./controller/vehicleRegistrationInfo');
-const { violationInfoReporting, getAllViolationInfo, approveViolationInfo } = require('./controller/violation');
+const {
+  violationInfoReporting,
+  getAllViolationInfo,
+  approveViolationInfo,
+  getViolationInfoByLicenseNumberList,
+} = require('./controller/violation');
 const {
   unregisteredVehicleInfoReporting,
   getAllUnregisteredVehicleInfo,
@@ -101,6 +106,7 @@ app.post('/approveUnregisteredVehicleInfo', approveUnregisteredVehicleInfo);
 app.post('/violationInfoReporting', violationInfoReporting);
 app.post('/getAllViolationInfo', getAllViolationInfo);
 app.post('/approveViolationInfo', approveViolationInfo);
+app.post('/getViolationInfoByLicenseNumberList', getViolationInfoByLicenseNumberList);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
