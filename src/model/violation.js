@@ -83,7 +83,6 @@ async function updateViolationStatusAndRemarkById(id, status, remark) {
  * @returns
  */
 async function selectViolationInfoByLicenseNumberList(licenseNumberList) {
-  console.log(licenseNumberList.map(item => "'" + item + "'").join(','));
   const connection = await createConnection();
   const [res] = await connection.query(
     'SELECT * FROM violation_info WHERE license_number IN (' +
