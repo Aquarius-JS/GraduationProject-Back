@@ -5,6 +5,7 @@ const {
   selectViolationInfoById,
   updateViolationStatusAndRemarkById,
   selectViolationInfoByLicenseNumberList,
+  updateViolationInfoToHaveReadById,
 } = require('../model/violation');
 
 /**
@@ -98,7 +99,18 @@ async function getViolationInfoByLicenseNumberList(req, res) {
   res.json(violationInfo);
 }
 
+async function violationInfoHaveRead(req, res) {
+  const { id } = req.body;
+  await updateViolationInfoToHaveReadById(id);
+  res.json({
+    isOk: true,
+    message: '设置已读成功',
+    data: { id },
+  });
+}
+
 exports.violationInfoReporting = violationInfoReporting;
 exports.getAllViolationInfo = getAllViolationInfo;
 exports.approveViolationInfo = approveViolationInfo;
 exports.getViolationInfoByLicenseNumberList = getViolationInfoByLicenseNumberList;
+exports.violationInfoHaveRead = violationInfoHaveRead;
