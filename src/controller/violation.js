@@ -8,6 +8,7 @@ const {
   updateViolationInfoToHaveReadById,
   updateViolationInfoStatusById,
   updateViolationInfoAppealReasonById,
+  updateViolationInfoAppealResponseById,
 } = require('../model/violation');
 
 /**
@@ -87,7 +88,6 @@ async function approveViolationInfo(req, res) {
       },
     });
   }
-  // const violationInfo = req.body;
 }
 
 /**
@@ -140,9 +140,29 @@ async function violationInfoAppeal(req, res) {
   }
 }
 
+async function violationInfoAppealHandle(req, res) {
+  const { id, status, appealResponse } = req.body;
+  const vioInfo = await selectViolationInfoById(id);
+  if (vioInfo.status === 3) {
+    await updateViolationInfoStatusById(id, status);
+    await updateViolationInfoAppealResponseById(id, appealResponse);
+    res.json({
+      isOk: true,
+      message: '申诉结果提交成功',
+    });
+  } else {
+    res.json({
+      isOk: false,
+      message: '申诉信息状态已过期，请稍后重试',
+      data: vioInfo,
+    });
+  }
+}
+
 exports.violationInfoReporting = violationInfoReporting;
 exports.getAllViolationInfo = getAllViolationInfo;
 exports.approveViolationInfo = approveViolationInfo;
 exports.getViolationInfoByLicenseNumberList = getViolationInfoByLicenseNumberList;
 exports.violationInfoHaveRead = violationInfoHaveRead;
 exports.violationInfoAppeal = violationInfoAppeal;
+exports.violationInfoAppealHandle = violationInfoAppealHandle;

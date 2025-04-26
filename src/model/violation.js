@@ -111,6 +111,12 @@ async function updateViolationInfoAppealReasonById(id, appealReason) {
   connection.end();
 }
 
+async function updateViolationInfoAppealResponseById(id, appealResponse) {
+  const connection = await createConnection();
+  await connection.query('UPDATE `violation_info` SET `appeal_response` = ? WHERE `id` = ?', [appealResponse, id]);
+  connection.end();
+}
+
 exports.createViolationInfo = createViolationInfo;
 exports.selectViolationInfo = selectViolationInfo;
 exports.selectViolationInfoById = selectViolationInfoById;
@@ -119,3 +125,4 @@ exports.selectViolationInfoByLicenseNumberList = selectViolationInfoByLicenseNum
 exports.updateViolationInfoToHaveReadById = updateViolationInfoToHaveReadById;
 exports.updateViolationInfoStatusById = updateViolationInfoStatusById;
 exports.updateViolationInfoAppealReasonById = updateViolationInfoAppealReasonById;
+exports.updateViolationInfoAppealResponseById = updateViolationInfoAppealResponseById;
