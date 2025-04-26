@@ -99,9 +99,23 @@ async function updateViolationInfoToHaveReadById(id) {
   connection.end();
 }
 
+async function updateViolationInfoStatusById(id, status) {
+  const connection = await createConnection();
+  await connection.query('UPDATE `violation_info` SET `status` = ? WHERE `id` = ?', [status, id]);
+  connection.end();
+}
+
+async function updateViolationInfoAppealReasonById(id, appealReason) {
+  const connection = await createConnection();
+  await connection.query('UPDATE `violation_info` SET `appeal_reason` = ? WHERE `id` = ?', [appealReason, id]);
+  connection.end();
+}
+
 exports.createViolationInfo = createViolationInfo;
 exports.selectViolationInfo = selectViolationInfo;
 exports.selectViolationInfoById = selectViolationInfoById;
 exports.updateViolationStatusAndRemarkById = updateViolationStatusAndRemarkById;
 exports.selectViolationInfoByLicenseNumberList = selectViolationInfoByLicenseNumberList;
 exports.updateViolationInfoToHaveReadById = updateViolationInfoToHaveReadById;
+exports.updateViolationInfoStatusById = updateViolationInfoStatusById;
+exports.updateViolationInfoAppealReasonById = updateViolationInfoAppealReasonById;

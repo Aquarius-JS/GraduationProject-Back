@@ -6,6 +6,8 @@ const {
   updateViolationStatusAndRemarkById,
   selectViolationInfoByLicenseNumberList,
   updateViolationInfoToHaveReadById,
+  updateViolationInfoStatusById,
+  updateViolationInfoAppealReasonById,
 } = require('../model/violation');
 
 /**
@@ -99,6 +101,11 @@ async function getViolationInfoByLicenseNumberList(req, res) {
   res.json(violationInfo);
 }
 
+/**
+ * 违规信息已读
+ * @param {*} req
+ * @param {*} res
+ */
 async function violationInfoHaveRead(req, res) {
   const { id } = req.body;
   await updateViolationInfoToHaveReadById(id);
@@ -109,8 +116,33 @@ async function violationInfoHaveRead(req, res) {
   });
 }
 
+/**
+ * 违规信息申诉接口
+ * @param {*} req
+ * @param {*} res
+ */
+async function violationInfoAppeal(req, res) {
+  const { id, appealReason } = req.body;
+  const vioInfo = await selectViolationInfoById(id);
+  if (vioInfo.status === 1) {
+    await updateViolationInfoStatusById(id, 3);
+    await updateViolationInfoAppealReasonById(id, appealReason);
+    res.json({
+      isOk: true,
+      message: '申诉信息提交成功',
+    });
+  } else {
+    res.json({
+      isOk: false,
+      message: '违规信息状态已过期，请稍后重试',
+      data: { vioInfo },
+    });
+  }
+}
+
 exports.violationInfoReporting = violationInfoReporting;
 exports.getAllViolationInfo = getAllViolationInfo;
 exports.approveViolationInfo = approveViolationInfo;
 exports.getViolationInfoByLicenseNumberList = getViolationInfoByLicenseNumberList;
 exports.violationInfoHaveRead = violationInfoHaveRead;
+exports.violationInfoAppeal = violationInfoAppeal;
