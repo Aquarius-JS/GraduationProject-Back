@@ -44,6 +44,7 @@ const {
   violationInfoHaveRead,
   violationInfoAppeal,
   violationInfoAppealHandle,
+  violationInfoDealtById,
 } = require('./controller/violation');
 const {
   unregisteredVehicleInfoReporting,
@@ -113,6 +114,7 @@ app.post('/getViolationInfoByLicenseNumberList', getViolationInfoByLicenseNumber
 app.post('/violationInfoHaveRead', violationInfoHaveRead);
 app.post('/violationInfoAppeal', violationInfoAppeal);
 app.post('/violationInfoAppealHandle', violationInfoAppealHandle);
+app.post('/violationInfoDealtById', violationInfoDealtById);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

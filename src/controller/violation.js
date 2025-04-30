@@ -140,6 +140,11 @@ async function violationInfoAppeal(req, res) {
   }
 }
 
+/**
+ * 申诉处理接口
+ * @param {*} req
+ * @param {*} res
+ */
 async function violationInfoAppealHandle(req, res) {
   const { id, status, appealResponse } = req.body;
   const vioInfo = await selectViolationInfoById(id);
@@ -159,6 +164,29 @@ async function violationInfoAppealHandle(req, res) {
   }
 }
 
+/**
+ * 违规信息核销接口
+ * @param {*} req
+ * @param {*} res
+ */
+async function violationInfoDealtById(req, res) {
+  const { id } = req.body;
+  const vioInfo = await selectViolationInfoById(id);
+  if (vioInfo.status === 1 || vioInfo.status === 5) {
+    await updateViolationInfoStatusById(id, 6);
+    res.json({
+      isOk: true,
+      message: '违规信息核销成功',
+    });
+  } else {
+    res.json({
+      isOk: false,
+      message: '违规信息状态过期，请稍后重试',
+      data: vioInfo,
+    });
+  }
+}
+
 exports.violationInfoReporting = violationInfoReporting;
 exports.getAllViolationInfo = getAllViolationInfo;
 exports.approveViolationInfo = approveViolationInfo;
@@ -166,3 +194,4 @@ exports.getViolationInfoByLicenseNumberList = getViolationInfoByLicenseNumberLis
 exports.violationInfoHaveRead = violationInfoHaveRead;
 exports.violationInfoAppeal = violationInfoAppeal;
 exports.violationInfoAppealHandle = violationInfoAppealHandle;
+exports.violationInfoDealtById = violationInfoDealtById;
