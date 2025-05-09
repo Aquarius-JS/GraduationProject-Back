@@ -6,3 +6,5 @@
     isOk: true || false
     message: '回显提示的信息'
 }
+
+qq邮箱授权码 gvzxnimskqmjbfhg

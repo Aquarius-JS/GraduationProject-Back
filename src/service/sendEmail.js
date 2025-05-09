@@ -13,7 +13,6 @@ const transporter = nodemailer.createTransport({
 const sendEmail = async mailContent => {
   const mailOptions = {
     from: '"Aquarius" <1015772292@qq.com>',
-    to: '1015772292@qq.com',
   };
   transporter.sendMail({ ...mailOptions, ...mailContent }, (error, info) => {
     if (error) {
@@ -24,7 +23,6 @@ const sendEmail = async mailContent => {
 };
 
 const approveRegisterEmail = async (stuInfo, registerInfo) => {
-  console.log(stuInfo);
   const mailContent = {
     subject: '车辆登记申请结果',
     to: stuInfo.email,
