@@ -1,8 +1,10 @@
 const {
+  getUserInfoByStuNumber,
   getVehicleRegistrationInfo,
   getVehicleRegistrationInfoById,
   updateVehicleRegistrationInfoById,
 } = require('../model/userInfo');
+const { approveRegisterEmail } = require('../service/sendEmail');
 
 /**
  * 获取车辆登记信息列表
@@ -21,9 +23,11 @@ async function getRegisterInfo(req, res) {
 async function approveRegister(req, res) {
   const { registerId } = req.body;
   const registerInfo = await getVehicleRegistrationInfoById(registerId);
+  const stuInfo = await getUserInfoByStuNumber(registerInfo.stu_number);
   if (registerInfo?.vehicle_status === 1) {
     await updateVehicleRegistrationInfoById(registerId, 2);
     res.json({ isOk: true, message: '操作成功', vehicle_status: 2 });
+    approveRegisterEmail(stuInfo, registerInfo);
   } else {
     res.json({ isOk: false, message: '申请信息发生变化，稍后重试' });
   }
