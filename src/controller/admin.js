@@ -21,11 +21,11 @@ async function getRegisterInfo(req, res) {
  * @param {*} res
  */
 async function approveRegister(req, res) {
-  const { registerId } = req.body;
+  const { registerId, remark } = req.body;
   const registerInfo = await getVehicleRegistrationInfoById(registerId);
   const stuInfo = await getUserInfoByStuNumber(registerInfo.stu_number);
   if (registerInfo?.vehicle_status === 1) {
-    await updateVehicleRegistrationInfoById(registerId, 2);
+    await updateVehicleRegistrationInfoById(registerId, 2, remark);
     res.json({ isOk: true, message: '操作成功', vehicle_status: 2 });
     approveRegisterEmail(stuInfo, registerInfo);
   } else {
