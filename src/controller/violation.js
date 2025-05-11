@@ -45,6 +45,7 @@ async function violationInfoReporting(req, res) {
     isOk: true,
     message: '违规信息上报成功',
   });
+  violationInfoNotice(id);
 }
 
 /**
