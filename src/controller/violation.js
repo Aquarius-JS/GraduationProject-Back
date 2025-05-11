@@ -10,6 +10,7 @@ const {
   updateViolationInfoAppealReasonById,
   updateViolationInfoAppealResponseById,
 } = require('../model/violation');
+const { violationInfoNotice } = require('../service/violationInfoNotice');
 
 /**
  * 违规信息上报接口
@@ -87,6 +88,7 @@ async function approveViolationInfo(req, res) {
         id,
       },
     });
+    violationInfoNotice(violationInfo.id);
   }
 }
 

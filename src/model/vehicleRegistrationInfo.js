@@ -15,7 +15,7 @@ async function createConnection() {
 }
 
 /**
- * 根据车牌号查询车辆登记信息
+ * 根据车牌号查询车辆登记信息列表
  * @param {*} license_number
  * @returns
  */

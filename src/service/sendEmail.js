@@ -55,6 +55,22 @@ const rejectRegisterEmail = async (stuInfo, registerInfo) => {
   sendEmail(mailContent);
 };
 
+const violationInfoEmail = async (stuInfo, violationInfo) => {
+  const mailContent = {
+    subject: '违规信息通知',
+    to: stuInfo.email,
+    html: `
+      <h2>尊敬的${stuInfo.user_name}同学：您好！</h2>
+      <p>您有一条新的车辆违规记录，具体信息如下：</p>
+      <p>姓名：${stuInfo.user_name}</p>
+      <p>学号：${stuInfo.stu_number}</p>
+      <p>车牌号：${violationInfo.license_number}</p>
+      <p><b>详细内容请前往校园车辆管理平台查看</b></p>`,
+  };
+  sendEmail(mailContent);
+};
+
 module.exports.sendEmail = sendEmail;
 exports.approveRegisterEmail = approveRegisterEmail;
 exports.rejectRegisterEmail = rejectRegisterEmail;
+exports.violationInfoEmail = violationInfoEmail;
