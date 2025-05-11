@@ -38,5 +38,23 @@ const approveRegisterEmail = async (stuInfo, registerInfo) => {
   sendEmail(mailContent);
 };
 
+const rejectRegisterEmail = async (stuInfo, registerInfo) => {
+  const mailContent = {
+    subject: '车辆登记申请结果',
+    to: stuInfo.email,
+    html: `
+      <h2>尊敬的${stuInfo.user_name}同学：您好！</h2>
+      <p>您的车辆登记申请已审核<span style="color: #cf1322;"><strong>未通过</strong></span>，具体信息如下：</p>
+      <p>姓名：${stuInfo.user_name}</p>
+      <p>学号：${stuInfo.stu_number}</p>
+      <p>车辆类型：${registerInfo.vehicle_type === 1 ? '电动车' : '摩托车'}</p>
+      <p>车牌号：${registerInfo.license_number}</p>
+      <p><b>请按照修改要求修改后重新提交</b></p>
+      <p>审批意见：${registerInfo.remark}</p>`,
+  };
+  sendEmail(mailContent);
+};
+
 module.exports.sendEmail = sendEmail;
 exports.approveRegisterEmail = approveRegisterEmail;
+exports.rejectRegisterEmail = rejectRegisterEmail;
