@@ -51,6 +51,7 @@ const {
   getAllUnregisteredVehicleInfo,
   approveUnregisteredVehicleInfo,
 } = require('./controller/unregisteredVehicleInfo');
+const { getMonitoringEquipment } = require('./controller/monitoringEquipment');
 const { uploadFile } = require('./controller/staticResource');
 const { imgOcr } = require('./controller/ocr');
 const { port, bodyMaxValue } = require('./config/appConfig');
@@ -115,6 +116,8 @@ app.post('/violationInfoHaveRead', violationInfoHaveRead);
 app.post('/violationInfoAppeal', violationInfoAppeal);
 app.post('/violationInfoAppealHandle', violationInfoAppealHandle);
 app.post('/violationInfoDealtById', violationInfoDealtById);
+
+app.post('/getMonitoringEquipment', getMonitoringEquipment);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
