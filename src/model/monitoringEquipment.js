@@ -31,7 +31,6 @@ async function selectMonitoringEquipment() {
  * @returns
  */
 async function creatMonitoringEquipment(moniEquip) {
-  console.log('新增监控设备信息', moniEquip);
   const connection = await createConnection();
   const sql =
     'INSERT INTO `monitoring_equipment` (id, type, name, time, ip, rules, location, sn) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
