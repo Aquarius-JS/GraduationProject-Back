@@ -126,7 +126,6 @@ app.post('/addMonitoringEquipment', addMonitoringEquipment);
 app.post('/updateMonitoringEquipmentRules', updateMonitoringEquipmentRules);
 
 app.get('/env', (req, res) => {
-  console.log(process.env);
   res.json({ env: process.env });
 });
 
