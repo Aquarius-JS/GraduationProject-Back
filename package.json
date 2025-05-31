@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "3000": "nodemon src/app.js",
-    "3031": "nodemon src/ossServer.js",
-    "start": "npm run 3031"
+    "dev": "nodemon src/app.js",
+    "start": "HOST=8.137.146.136 && MYSQL_HOST=8.137.146.136 && node src/app.js"
   },
   "keywords": [],
   "author": "",

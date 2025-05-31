@@ -8,7 +8,7 @@ const { privateKey } = require('../config/appConfig');
  * @param {Function} next
  */
 async function isLoginMiddleware(req, res, next) {
-  if (req.path === '/login') {
+  if (req.path === '/login' || req.path === '/env') {
     next();
     return;
   }

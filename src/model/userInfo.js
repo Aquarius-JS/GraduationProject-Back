@@ -1,17 +1,13 @@
 // 导入模块
 const mysql = require('mysql2/promise');
+const mysqlConfig = require('../config/mysqlConfig');
 
 /**
  * 创建数据库连接函数
  * @returns
  */
 async function createConnection() {
-  const connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '123456',
-    database: 'graduationproject',
-  });
+  const connection = await mysql.createConnection(mysqlConfig);
   return connection;
 }
 
